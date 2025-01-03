@@ -4,7 +4,7 @@ import "./App.css";
 function App() {
   const [cv, setCv] = useState({
     personalInfo: {
-      firstname: "",
+      firstname: { value: "", placeholder: "" },
       lastname: "",
       title: "",
       photo: "",
@@ -157,7 +157,7 @@ function App() {
         placeholder="Phone Number"
         value={cv.personalInfo.phonenumber}
         onChange={(e) =>
-          handlePersonalInfoChange("phonenumber", e.target.value)
+          handlePersonalInfoChange(e.target.name, e.target.value)
         }
       />
       <input
@@ -288,3 +288,4 @@ function App() {
 }
 
 export default App;
+// napravit inpute preko petlje
