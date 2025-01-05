@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Input from "./Input";
+import Modal from "./Modal";
 import "./App.css";
 
 function App() {
@@ -36,6 +37,8 @@ function App() {
     skills: [],
   });
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handlePersonalInfoChange = (field, value) => {
     setCv((prevCv) => ({
       ...prevCv,
@@ -54,6 +57,17 @@ function App() {
         [field]: value,
       };
       return { ...prevCv, education: updatedEducation };
+    });
+  };
+
+  const handleWorkChange = (index, field, value) => {
+    setCv((prevCv) => {
+      const updatedWork = [...prevCv.workExperience];
+      updatedWork[index] = {
+        ...updatedWork[index],
+        [field]: value,
+      };
+      return { ...prevCv, workExperience: updatedWork };
     });
   };
 
@@ -81,6 +95,29 @@ function App() {
     }));
   };
 
+  const addWorkExperience = () => {
+    setCv((prevCv) => ({
+      ...prevCv,
+      workExperience: [
+        ...prevCv.workExperience,
+        {
+          companyName: "",
+          position: "",
+          city: "",
+          from: "",
+          to: "",
+        },
+      ],
+    }));
+  };
+
+  const deleteWorkExperience = () => {
+    setCv((prevCv) => ({
+      ...prevCv,
+      workExperience: prevCv.workExperience.slice(0, -1),
+    }));
+  };
+
   const personalInfoFields = [
     { name: "firstname", placeholder: "First Name" },
     { name: "lastname", placeholder: "Last Name" },
@@ -97,6 +134,14 @@ function App() {
     { name: "city", placeholder: "City" },
     { name: "degree", placeholder: "Degree" },
     { name: "subject", placeholder: "Subject" },
+    { name: "from", placeholder: "From" },
+    { name: "to", placeholder: "To" },
+  ];
+
+  const workExperienceFields = [
+    { name: "companyName", placeholder: "Company Name" },
+    { name: "position", placeholder: "Position" },
+    { name: "city", placeholder: "City" },
     { name: "from", placeholder: "From" },
     { name: "to", placeholder: "To" },
   ];
@@ -132,6 +177,63 @@ function App() {
       ))}
       <button onClick={addEducation}>Add Education</button>
       <button onClick={deleteEducation}>Delete Education</button>
+
+      <h3>Work Experience</h3>
+      {cv.workExperience.map((work, index) => (
+        <div key={index}>
+          {workExperienceFields.map((field) => (
+            <Input
+              key={field.name}
+              name={field.name}
+              placeholder={field.placeholder}
+              value={work[field.name]}
+              onChange={(name, value) => handleWorkChange(index, name, value)}
+            />
+          ))}
+        </div>
+      ))}
+      <button onClick={addWorkExperience}>Add Work Experience</button>
+      <button onClick={deleteWorkExperience}>Delete Work Experience</button>
+
+      <button onClick={() => setIsModalOpen(true)}>Preview</button>
+
+      {isModalOpen && (
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <h3>Preview</h3>
+          <div>
+            <h4>Personal Information</h4>
+            {Object.entries(cv.personalInfo).map(([key, value]) => (
+              <p key={key}>
+                {key}: {value}
+              </p>
+            ))}
+          </div>
+          <div>
+            <h4>Education</h4>
+            {cv.education.map((edu, index) => (
+              <div key={index}>
+                {Object.entries(edu).map(([key, value]) => (
+                  <p key={key}>
+                    {key}: {value}
+                  </p>
+                ))}
+              </div>
+            ))}
+          </div>
+          <div>
+            <h4>Work Experience</h4>
+            {cv.workExperience.map((work, index) => (
+              <div key={index}>
+                {Object.entries(work).map(([key, value]) => (
+                  <p key={key}>
+                    {key}: {value}
+                  </p>
+                ))}
+              </div>
+            ))}
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }
