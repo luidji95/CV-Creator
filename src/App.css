@@ -99,35 +99,96 @@ div > button {
 div {
   margin-bottom: 20px;
 }
+/* Modal overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
+/* Modal content */
 .modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
+  background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+  padding: 30px;
+  border-radius: 12px;
   width: 90%;
   max-width: 600px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   position: relative;
+  animation: slideDown 0.5s ease-out;
+  overflow-y: auto;
+  max-height: 80%;
 }
 
+/* Close button */
 .modal-close {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  right: 15px;
   background: none;
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+  color: #ff5e5e;
+  transition: transform 0.3s ease;
+}
+
+.modal-close:hover {
+  transform: scale(1.2);
+}
+
+/* Modal content headings */
+.modal-content h3 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #ff5e5e;
+  display: inline-block;
+}
+
+.modal-content h4 {
+  font-size: 1.5rem;
+  color: #555;
+  margin-top: 20px;
+}
+
+/* Modal content paragraphs */
+.modal-content p {
+  font-size: 1rem;
+  color: #666;
+  margin: 5px 0;
+  line-height: 1.6;
+}
+
+/* Animation for modal */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scroll styling */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background-color: #888;
 }
