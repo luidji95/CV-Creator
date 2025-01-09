@@ -6,32 +6,32 @@ import "./App.css";
 function App() {
   const [cv, setCv] = useState({
     personalInfo: {
-      firstname: "",
-      lastname: "",
-      title: "",
-      photo: "",
-      adress: "",
-      phonenumber: "",
-      email: "",
-      description: "",
+      firstname: { value: "", placeholder: "First Name" },
+      lastname: { value: "", placeholder: "Last Name" },
+      title: { value: "", placeholder: "Title" },
+      photo: { value: "", placeholder: "Photo URL" },
+      adress: { value: "", placeholder: "Address" },
+      phonenumber: { value: "", placeholder: "Phone Number" },
+      email: { value: "", placeholder: "E-mail" },
+      description: { value: "", placeholder: "Description" },
     },
     education: [
       {
-        universityName: "",
-        city: "",
-        degree: "",
-        subject: "",
-        from: "",
-        to: "",
+        universityName: { value: "", placeholder: "University Name" },
+        city: { value: "", placeholder: "City" },
+        degree: { value: "", placeholder: "Degree" },
+        subject: { value: "", placeholder: "Subject" },
+        from: { value: "", placeholder: "From" },
+        to: { value: "", placeholder: "To" },
       },
     ],
     workExperience: [
       {
-        companyName: "",
-        position: "",
-        city: "",
-        from: "",
-        to: "",
+        companyName: { value: "", placeholder: "Company Name" },
+        position: { value: "", placeholder: "Position" },
+        city: { value: "", placeholder: "City" },
+        from: { value: "", placeholder: "From" },
+        to: { value: "", placeholder: "To" },
       },
     ],
     skills: [],
@@ -39,36 +39,25 @@ function App() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleFieldChange = (section, index, field, value) => {
+    setCv((prevCv) => {
+      const updatedSection = [...prevCv[section]];
+      updatedSection[index] = {
+        ...updatedSection[index],
+        [field]: { ...updatedSection[index][field], value },
+      };
+      return { ...prevCv, [section]: updatedSection };
+    });
+  };
+
   const handlePersonalInfoChange = (field, value) => {
     setCv((prevCv) => ({
       ...prevCv,
       personalInfo: {
         ...prevCv.personalInfo,
-        [field]: value,
+        [field]: { ...prevCv.personalInfo[field], value },
       },
     }));
-  };
-
-  const handleEducationChange = (index, field, value) => {
-    setCv((prevCv) => {
-      const updatedEducation = [...prevCv.education];
-      updatedEducation[index] = {
-        ...updatedEducation[index],
-        [field]: value,
-      };
-      return { ...prevCv, education: updatedEducation };
-    });
-  };
-
-  const handleWorkChange = (index, field, value) => {
-    setCv((prevCv) => {
-      const updatedWork = [...prevCv.workExperience];
-      updatedWork[index] = {
-        ...updatedWork[index],
-        [field]: value,
-      };
-      return { ...prevCv, workExperience: updatedWork };
-    });
   };
 
   const addEducation = () => {
@@ -77,12 +66,12 @@ function App() {
       education: [
         ...prevCv.education,
         {
-          universityName: "",
-          city: "",
-          degree: "",
-          subject: "",
-          from: "",
-          to: "",
+          universityName: { value: "", placeholder: "University Name" },
+          city: { value: "", placeholder: "City" },
+          degree: { value: "", placeholder: "Degree" },
+          subject: { value: "", placeholder: "Subject" },
+          from: { value: "", placeholder: "From" },
+          to: { value: "", placeholder: "To" },
         },
       ],
     }));
@@ -101,11 +90,11 @@ function App() {
       workExperience: [
         ...prevCv.workExperience,
         {
-          companyName: "",
-          position: "",
-          city: "",
-          from: "",
-          to: "",
+          companyName: { value: "", placeholder: "Company Name" },
+          position: { value: "", placeholder: "Position" },
+          city: { value: "", placeholder: "City" },
+          from: { value: "", placeholder: "From" },
+          to: { value: "", placeholder: "To" },
         },
       ],
     }));
@@ -118,58 +107,32 @@ function App() {
     }));
   };
 
-  const personalInfoFields = [
-    { name: "firstname", placeholder: "First Name" },
-    { name: "lastname", placeholder: "Last Name" },
-    { name: "title", placeholder: "Title" },
-    { name: "photo", placeholder: "Photo URL" },
-    { name: "adress", placeholder: "Address" },
-    { name: "phonenumber", placeholder: "Phone Number" },
-    { name: "email", placeholder: "E-mail" },
-    { name: "description", placeholder: "Description" },
-  ];
-
-  const educationFields = [
-    { name: "universityName", placeholder: "University Name" },
-    { name: "city", placeholder: "City" },
-    { name: "degree", placeholder: "Degree" },
-    { name: "subject", placeholder: "Subject" },
-    { name: "from", placeholder: "From" },
-    { name: "to", placeholder: "To" },
-  ];
-
-  const workExperienceFields = [
-    { name: "companyName", placeholder: "Company Name" },
-    { name: "position", placeholder: "Position" },
-    { name: "city", placeholder: "City" },
-    { name: "from", placeholder: "From" },
-    { name: "to", placeholder: "To" },
-  ];
-
   return (
     <div className="div-main">
       <h3>Personal Information</h3>
-      {personalInfoFields.map((field) => (
+      {Object.entries(cv.personalInfo).map(([key, { value, placeholder }]) => (
         <Input
-          key={field.name}
-          name={field.name}
-          placeholder={field.placeholder}
-          value={cv.personalInfo[field.name]}
-          onChange={handlePersonalInfoChange}
+          key={key}
+          name={key}
+          placeholder={placeholder}
+          value={value}
+          onChange={(field, newValue) =>
+            handlePersonalInfoChange(field, newValue)
+          }
         />
       ))}
 
       <h3>Education</h3>
       {cv.education.map((edu, index) => (
         <div key={index}>
-          {educationFields.map((field) => (
+          {Object.entries(edu).map(([key, { value, placeholder }]) => (
             <Input
-              key={field.name}
-              name={field.name}
-              placeholder={field.placeholder}
-              value={edu[field.name]}
-              onChange={(name, value) =>
-                handleEducationChange(index, name, value)
+              key={key}
+              name={key}
+              placeholder={placeholder}
+              value={value}
+              onChange={(field, newValue) =>
+                handleFieldChange("education", index, field, newValue)
               }
             />
           ))}
@@ -181,13 +144,15 @@ function App() {
       <h3>Work Experience</h3>
       {cv.workExperience.map((work, index) => (
         <div key={index}>
-          {workExperienceFields.map((field) => (
+          {Object.entries(work).map(([key, { value, placeholder }]) => (
             <Input
-              key={field.name}
-              name={field.name}
-              placeholder={field.placeholder}
-              value={work[field.name]}
-              onChange={(name, value) => handleWorkChange(index, name, value)}
+              key={key}
+              name={key}
+              placeholder={placeholder}
+              value={value}
+              onChange={(field, newValue) =>
+                handleFieldChange("workExperience", index, field, newValue)
+              }
             />
           ))}
         </div>
@@ -202,7 +167,7 @@ function App() {
           <h3>Preview</h3>
           <div>
             <h4>Personal Information</h4>
-            {Object.entries(cv.personalInfo).map(([key, value]) => (
+            {Object.entries(cv.personalInfo).map(([key, { value }]) => (
               <p key={key}>
                 {key}: {value}
               </p>
@@ -212,7 +177,7 @@ function App() {
             <h4>Education</h4>
             {cv.education.map((edu, index) => (
               <div key={index}>
-                {Object.entries(edu).map(([key, value]) => (
+                {Object.entries(edu).map(([key, { value }]) => (
                   <p key={key}>
                     {key}: {value}
                   </p>
@@ -224,7 +189,7 @@ function App() {
             <h4>Work Experience</h4>
             {cv.workExperience.map((work, index) => (
               <div key={index}>
-                {Object.entries(work).map(([key, value]) => (
+                {Object.entries(work).map(([key, { value }]) => (
                   <p key={key}>
                     {key}: {value}
                   </p>
