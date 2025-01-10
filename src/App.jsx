@@ -2,18 +2,19 @@ import { useState } from "react";
 import Input from "./Input";
 import Modal from "./Modal";
 import "./App.css";
+import InputPhoto from "./InputPhoto";
 
 function App() {
   const [cv, setCv] = useState({
     personalInfo: {
-      firstname: { value: "", placeholder: "First Name" },
-      lastname: { value: "", placeholder: "Last Name" },
-      title: { value: "", placeholder: "Title" },
-      photo: { value: "", placeholder: "Photo URL" },
-      adress: { value: "", placeholder: "Address" },
-      phonenumber: { value: "", placeholder: "Phone Number" },
-      email: { value: "", placeholder: "E-mail" },
-      description: { value: "", placeholder: "Description" },
+      firstname: { value: "", placeholder: "First Name", type: "text" },
+      lastname: { value: "", placeholder: "Last Name", type: "text" },
+      title: { value: "", placeholder: "Title", type: "text" },
+      photo: { value: "", placeholder: "Photo URL", type: "text" },
+      adress: { value: "", placeholder: "Address", type: "text" },
+      phonenumber: { value: "", placeholder: "Phone Number", type: "text" },
+      email: { value: "", placeholder: "E-mail", type: "text" },
+      description: { value: "", placeholder: "Description", type: "text" },
     },
     education: [
       {
@@ -110,18 +111,52 @@ function App() {
   return (
     <div className="div-main">
       <h3>Personal Information</h3>
-      {Object.entries(cv.personalInfo).map(([key, { value, placeholder }]) => (
-        <Input
-          key={key}
-          name={key}
-          placeholder={placeholder}
-          value={value}
-          onChange={(field, newValue) =>
-            handlePersonalInfoChange(field, newValue)
+      {Object.entries(cv.personalInfo).map(
+        ([key, { value, placeholder, type }]) => {
+          if (type === "photo") {
+            return (
+              <InputPhoto
+                key={key}
+                name={key}
+                value={value}
+                onChange={(field, newValue) =>
+                  setCv((prevCv) => ({
+                    ...prevCv,
+                    personalInfo: {
+                      ...prevCv.personalInfo,
+                      [field]: {
+                        ...prevCv.personalInfo[field],
+                        value: newValue,
+                      },
+                    },
+                  }))
+                }
+              />
+            );
+          } else {
+            return (
+              <Input
+                key={key}
+                name={key}
+                placeholder={placeholder}
+                value={value}
+                onChange={(field, newValue) =>
+                  setCv((prevCv) => ({
+                    ...prevCv,
+                    personalInfo: {
+                      ...prevCv.personalInfo,
+                      [field]: {
+                        ...prevCv.personalInfo[field],
+                        value: newValue,
+                      },
+                    },
+                  }))
+                }
+              />
+            );
           }
-        />
-      ))}
-
+        }
+      )}
       <h3>Education</h3>
       {cv.education.map((edu, index) => (
         <div key={index}>
