@@ -193,12 +193,19 @@ div {
   background-color: #888;
 }
 
-.input-photo {
-  margin: 10px 0;
+.file-input {
+  display: none; /* Sakrij originalni input */
 }
 
-.input-photo img {
-  display: block;
+.custom-file-label {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
   border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: inline-block;
+}
+
+.custom-file-label:hover {
+  background-color: #0251a6;
 }

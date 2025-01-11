@@ -10,7 +10,7 @@ function App() {
       firstname: { value: "", placeholder: "First Name", type: "text" },
       lastname: { value: "", placeholder: "Last Name", type: "text" },
       title: { value: "", placeholder: "Title", type: "text" },
-      photo: { value: "", placeholder: "Photo URL", type: "text" },
+      photo: { value: "", placeholder: "Photo URL", type: "photo" },
       adress: { value: "", placeholder: "Address", type: "text" },
       phonenumber: { value: "", placeholder: "Phone Number", type: "text" },
       email: { value: "", placeholder: "E-mail", type: "text" },
