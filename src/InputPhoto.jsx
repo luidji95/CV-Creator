@@ -1,19 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 
 const InputPhoto = ({ name, value, onChange }) => {
+  const [photo, setState] = useState(null);
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        onChange(name, reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+    const photo = URL.createObjectURL(e.target.files[0]);
   };
 
   return (
     <div className="input-photo">
+      {photo && <img src={photo} />}
       <input type="file" accept="image/*" onChange={handleFileChange} />
       {value && (
         <img
