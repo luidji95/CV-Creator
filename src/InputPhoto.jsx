@@ -1,30 +1,34 @@
 import React, { useState } from "react";
 
 const InputPhoto = ({ name, value, onChange }) => {
-  const [photo, setPhoto] = useState(null);
+  const [fileName, setFileName] = useState(""); // Za prikaz imena fajla
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const photoURL = URL.createObjectURL(file); // Kreiramo URL za pregled slike
-      setPhoto(photoURL); // Čuvamo URL slike u lokalnom stanju
-      onChange(name, file); // Prosleđujemo fajl roditeljskoj komponenti
+      const photoURL = URL.createObjectURL(file);
+      setFileName(file.name); // Čuvanje imena fajla
+      onChange(name, photoURL); // Prosleđivanje URL-a roditeljskoj komponenti
     }
   };
 
   return (
     <div className="input-photo">
-      {/* Prikaz slike iz lokalnog stanja */}
-      {photo && (
-        <img
-          src={photo}
-          alt="Uploaded preview"
-          style={{ maxWidth: "100px", marginBottom: "10px" }}
-        />
-      )}
-      <input type="file" accept="image/*" onChange={handleFileChange} />
-      {/* Ako postoji vrednost prosleđena iz roditeljske komponente, prikazuje se */}
-      {value && !photo && (
+      {/* Prilagođeno dugme */}
+      <label
+        htmlFor={name}
+        className={`custom-file-label ${fileName ? "filled" : ""}`}
+      >
+        {fileName || "Upload Photo"} {/* Prikazuje ime fajla ili placeholder */}
+      </label>
+      <input
+        id={name}
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+      />
+      {/* Prikaz slike ako postoji */}
+      {value && (
         <img
           src={value}
           alt="Uploaded preview"

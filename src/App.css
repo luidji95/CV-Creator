@@ -209,3 +209,44 @@ div {
 .custom-file-label:hover {
   background-color: #0251a6;
 }
+/* Skrivanje originalnog file input-a */
+.input-photo input[type="file"] {
+  display: none;
+}
+
+/* Stil za prilagođeno dugme */
+.input-photo label {
+  display: inline-block;
+  background-color: #ffffff;
+  border: 1px solid #ced4da;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  width: 100%; /* Isto kao ostali inputi */
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Hover efekat */
+.input-photo label:hover {
+  background-color: #f8f9fa;
+  border-color: #adb5bd;
+}
+
+/* Fokus efekat */
+.input-photo label:focus {
+  outline: none;
+  border-color: #80bdff;
+  background-color: #e9ecef;
+  box-shadow: 0 0 0 3px rgba(128, 189, 255, 0.5);
+}
+
+/* Prikaz imena fajla */
+.input-photo .file-name {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #6c757d;
+  font-style: italic;
+}
