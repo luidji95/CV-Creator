@@ -200,37 +200,49 @@ function App() {
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
           <h3>Preview</h3>
-          <div>
-            <h4>Personal Information</h4>
-            {Object.entries(cv.personalInfo).map(([key, { value }]) => (
-              <p key={key}>
-                {key}: {value}
-              </p>
-            ))}
-          </div>
-          <div>
-            <h4>Education</h4>
-            {cv.education.map((edu, index) => (
-              <div key={index}>
-                {Object.entries(edu).map(([key, { value }]) => (
-                  <p key={key}>
-                    {key}: {value}
-                  </p>
-                ))}
+          <div className="modal-content">
+            <div>
+              <h4>Personal Information</h4>
+              {Object.entries(cv.personalInfo).map(([key, { value }]) => (
+                <p key={key}>
+                  {key}: {value}
+                </p>
+              ))}
+            </div>
+            <div>
+              <h4>Education</h4>
+              {cv.education.map((edu, index) => (
+                <div key={index}>
+                  {Object.entries(edu).map(([key, { value }]) => (
+                    <p key={key}>
+                      {key}: {value}
+                    </p>
+                  ))}
+                </div>
+              ))}
+            </div>
+            <div>
+              <h4>Work Experience</h4>
+              {cv.workExperience.map((work, index) => (
+                <div key={index}>
+                  {Object.entries(work).map(([key, { value }]) => (
+                    <p key={key}>
+                      {key}: {value}
+                    </p>
+                  ))}
+                </div>
+              ))}
+            </div>
+
+            {cv.personalInfo.photo.value && (
+              <div className="photo-preview">
+                <img
+                  src={cv.personalInfo.photo.value}
+                  alt="Profile Preview"
+                  className="photo-styled"
+                />
               </div>
-            ))}
-          </div>
-          <div>
-            <h4>Work Experience</h4>
-            {cv.workExperience.map((work, index) => (
-              <div key={index}>
-                {Object.entries(work).map(([key, { value }]) => (
-                  <p key={key}>
-                    {key}: {value}
-                  </p>
-                ))}
-              </div>
-            ))}
+            )}
           </div>
         </Modal>
       )}
